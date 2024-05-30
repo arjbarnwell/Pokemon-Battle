@@ -1,0 +1,63 @@
+Period 7
+Arden Barnwell
+Arden Barnwell’s Group
+Recreating a Pokemon Battle - 5.29.24 Meeting #1
+
+Description
+The goal of this project is to recreate a pokemon battle implemented in the processing engine. Users will be able to select one of 6 sprites from a loading screen and then enter the traditional battle sequence by selecting one of 4 given moves and undergoing turn-based combat. 
+
+List of main functions and their explanations:
+Backdrop
+AttackChoice
+Battle
+StatChange
+DamageCalc
+
+Backdrop: 
+This decides what the background will look like, rotating between scenes such as the sprite selection screen, the battle screen, and the victory/failure screen when receiving a signal. It has no return type.
+
+openSelection:
+This opens up the initial screen for choosing the user's pokemon, displaying all 6 of them arranged in a 2x3. If the user hovers their cursor over a pokemon, the empty box below them will display an imported image showing the pokemon’s name, types, stats, and ability. Once the user clicks on this, the userChoice will be set to a string corresponding to a certain Pokemon and the enemyChoice will be set to a random Pokemon from a list containing the remaining 5. This will then activate a boolean BattleScreen by setting it to true in order to move to the battle layout. This will be called by Backdrop and will have no return type. 
+
+attackChoice:
+This creates a small UI displaying the 4 possible moves that the user’s pokemon can pick from. It will return the name of the chosen attack, if LMB is pressed while the mouse is hovered over said attack.
+
+Battle:
+This compares the speed stat of both pokemon and then calculates the damage of each move. It will apply the damage of the pokemon with the higher speed stat first, and then check to see if either pokemon’s health has reached 0. If yes, then it will stop immediately and signal the Backdrop to display the victory/failure screen. Else, it will apply the damage of the other pokemon and then check to see if either pokemon’s health has reached 0 again. This function has no return type.
+
+StatChange:
+This will alter a pokemon’s stat by the given input number. This will generally be called by Battle and will have no return type.
+
+DamageCalc:
+This will take the attacking pokemon’s ATK  or SPATK stat and the defending pokemon’s DEF or SPDEF stat to calculate the damage of an attack. This will then signal for the HP bars to change. This will generally be called by Battle and will have no return type.
+
+These functions may be split into further sub-functions in order to improve clarity as the project progresses. 
+
+UML (image on google docs)
+
+
+How does it work?
+Users will open the program up to a loading screen with 6 different sprites to choose from. The player will be able to select one of the 6 sprites by clicking on it with LMB. Before selecting a sprite, users will also be able to open an information panel by clicking on it with RMB, detailing available moves and stats. The screen will then shift to a battle layout, with sprites noting both pokemons’ health and a menu to select an attack, which can be chosen by clicking on it with LMB. The battle will then occur, with order decided by pokemon’s speed stat, which will be held as a local variable. Damage will be calculated by a pokemon’s corresponding ATK and DEF stats, which will calculate a percentage and then change the health bar sprite to represent the percentage of remaining health, which will be noted by displaying the color green for remaining health and displaying the color red for missing health. Once a health bar is entirely red, the battle will immediately stop and a corresponding victory or failure screen will follow, before ending the program. 
+   
+
+Functionalities/Issues
+I was having slight issues with running permanent commands because I was using the delay function a lot without really knowing what it does specifically. I have since removed it but am looking for a means to slow down my function some other way. 
+
+Current functions:
+Backdrop
+openSelection
+victoryScreen
+
+Functions to be done by the next meeting:
+Battle
+attackChoice
+damageCalc
+statChange
+
+This week I primarily focused on designing the images that I wanted to use and choosing pixel sizes for the final project so that it would be readable to the user. I resized and edited images using Paint 3D to make them fit into placeholder rectangles that I created, and just created some of my own to better fit my project.  This was because I was having slight issues with the displayed pixel size not actually matching the focus of the image’s dimensions due to transparent backgrounds. I am using booleans to signal when I am done with a certain stage of the battle so that I can redraw over the screen as Backdrop proceeds. I have starter code in the works for Battle and attackChoice, but I do not consider those complete enough to show just yet. Backdrop will continue to be edited as I add more screens, but it is complete for the code that I have now. I anticipate that I will have some trouble making the attack animations move without destroying my display so I will probably change my Battle code to make it easier to redraw as the attack animations move. 
+
+
+
+
+
+
