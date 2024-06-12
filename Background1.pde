@@ -196,26 +196,26 @@ Battle();
 }
 }
 
-statChange(String stat, int stage){
-if(stat.equals(“ATK”)){
-myPokemon.setATK(stage * .5 * myPokemon.getATK() + myPokemon.getATK());
+statChange(String stat, int stage, Pokemon userPokemon){
+if(stat.equals("ATK")){
+userPokemon.setATK(stage * .5 * userPokemon.getATK() + userPokemon.getATK());
 }
-if(stat.equals(“DEF”)){ 
-myPokemon.setDEF(stage * .5 * myPokemon.getDEF() + myPokemon.getDEF());
+if(stat.equals("DEF")){ 
+userPokemon.setDEF(stage * .5 * userPokemon.getDEF() + userPokemon.getDEF());
 }
-if(stat.equals(“SPATK”)){
-myPokemon.setSPATK(stage * .5 * myPokemon.getSPATK() + myPokemon.getSPATK());
+if(stat.equals("SPATK")){
+userPokemon.setSPATK(stage * .5 * userPokemon.getSPATK() + userPokemon.getSPATK());
 }
-if(stat.equals(“SPDEF”)){
-myPokemon.setSPDEF(stage * .5 * myPokemon.getSPDEF() + myPokemon.getSPDEF());
+if(stat.equals("SPDEF")){
+userPokemon.setSPDEF(stage * .5 * userPokemon.getSPDEF() + userPokemon.getSPDEF());
 }
-if(stat.equals(“speed”)){
-myPokemon.setSPD(stage * .5 * myPokemon.getspeed() + myPokemon.getspeed());
+if(stat.equals("speed")){
+userPokemon.setSPD(stage * .5 * userPokemon.getspeed() + userPokemon.getspeed());
 }
 }
 
 
-public void damageCalc(String move, boolean TargetEnemy){
+public void damageCalc(String move, boolean TargetEnemy, Pokemon userPokemon){
 if (TargetEnemy){
 String type1 = enemyPokemon.getType1();
 String type2 = enemyPokemon.getType2();
@@ -232,13 +232,27 @@ if ((TargetEnemy && (myPokemon.getType1.equals(Type[move])
 STABbonus = 1.5;
 }
 double typeAdvantage = typeChart(Type[move], type1) * typeChart(Type[move], type2);
-/*if(TargetEnemy){
+double abilityboost = 1;
+if(userPokemon.getAbility.equals("Blaze") && userPokemon.getType1().equals("FIR")){
+  abilityboost = 1.5;
+}
+if(userPokemon.getAbility.equals("Overgrow") && userPokemon.getType1().equals("GRA")){
+  abilityboost = 1.5;
+}
+if(userPokemon.getAbility.equals("Torrent") && userPokemon.getType1().equals("WAT")){
+  abilityboost = 1.5;
+}
+
+
+if(TargetEnemy){
 enemyPokemon.setHP(enemyPokemon.currentHP - 
-(Damage[move] * typeAdvantage * STABbonus * (myPokemon.getATK() / ((double) enemyPokemon.getDEF()) * 
+(2/5 * Damage[move] * typeAdvantage * STABbonus * 
+(myPokemon.getATK() / ((double) enemyPokemon.getDEF())) * abilityboost));
+
 
 //NEED TO REPLACE A LOT OF THIS WITH THE EQUATION ON WIKI PAGE 
 //(2*level)/5 * power /50 + 2 * stab * a ton of other modifiers just leave it as is for now because i need to dedicate a lot of time in consecutive hours for this
-}*/
+}
 }
 
 public double typeChart(String moveType, String targetType){
