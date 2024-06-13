@@ -10,8 +10,14 @@ class HPbar{
     this.name = name;
   }
   
+  String getNamed(){
+    return this.name;
+  }
   void update(int newHP){
     this.percentage = ((double)newHP / maxHP);
+    if(this.percentage < 0){
+      this.percentage = 0;
+  }
   }
   
   void display(){
