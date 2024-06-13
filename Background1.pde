@@ -12,16 +12,23 @@ PImage BlastoiseStatCard;
 PImage SceptileStatCard;
 PImage BlazikenStatCard;
 PImage SwampertStatCard;
+//Extra Background Images
+PImage selectBack;
 //Screen Booleans(signals to change screen)
 Boolean SelectScreen = false;
 Boolean BattleScreen = false;
-Boolean EndScreen;
+Boolean VictoryScreen = false;
+Boolean LossScreen = false;
 //Pokemon Choice
 String UserChoice = "";
 String EnemyChoice;
-//
+//HashMap Setup
+Hashmap<String, String[]> newMAP = new Hashmap<String, String[]>();
+//pos0 = Accuracy, pos1 = Damage, pos2 = Type, pos3 = statChange(if exists)
+
 void setup(){
   size(400, 600);
+  selectBack = loadImage("selectBack.png");
   Venusaur = loadImage("003.png");
   Charizard = loadImage("006.png");
   Blastoise = loadImage("009.png");
@@ -34,6 +41,7 @@ void setup(){
   SceptileStatCard = loadImage("SceptileStatCard.png");
   BlazikenStatCard = loadImage("BlazikenStatCard.png");
   SwampertStatCard = loadImage("SwampertStatCard.png");
+
 }
 //call background(bgColor) to erase the screen when changing what I want to show
 void draw(){
@@ -43,28 +51,32 @@ void draw(){
   if(BattleScreen){
   newScreen();
   }
+  if(VictoryScreen){
+  VictoryScreenLoad();
+  }
+  if(LossScreen){
+    LossScreenLoad();
+  }
  
 }
 //hold here and just delete battle function because it does not work at all with new changes
 //remake whole battlescreen arrangement because back sprites look weird
 void newScreen(){
   background(100);
-  
-  background(255);
-  
-  background(100);
-  
+  Pokemon myPokemon = new Pokemon(UserChoice);
+  Pokemon enemyPokemon = new Pokemon(EnemyChoice);
+  //LOAD IN NEW BACKGROUND here
 }
 
 
 void BattleScreenLoad(){
   //replace this with a PImage of the party screen later on but make solid color for now
-  background(50);
+  background(selectBack);
   //each sprite is 96x96p but this doesnt matter at all for some reason???? how do i
   //decide what counts as clicking on the image then?? weird
-  image(Venusaur, 50, 50);
-  image(Charizard, 156, 50);
-  image(Blastoise, 254, 50);
+  image(Venusaur, 50, 65);
+  image(Charizard, 156, 59);
+  image(Blastoise, 254, 65);
   image(Sceptile, 50, 166);
   image(Blaziken, 156, 166);
   image(Swampert, 254, 166);
@@ -150,4 +162,160 @@ void openSelection(){
    }
  }
 }
+
+public void Battle(){
+myHPBar.display();
+enemyHPBar.display();
+String myMove = myPokemon.selectMove();
+String[] enemyMoveArray = enemyPokemon.moveArray();
+String enemyMove = enemyMoveArray[(int)Math.random(4)];
+if (myPokemon.getSpeed() > enemyPokemon.getSpeed()){
+  if (Accuracy[myMove] > Math.random(100)){
+    damageCalc(myMove, true);
+    statChange(Stage[myMove].substring(0,1), Stage[myMove].substring(1));
+    myHPBar.display();
+    enemyHPBar.display();
+  }
+ }
+  else{
+    if(Accuracy[enemyMove] > Math.random(100)){
+    damageCalc(enemyMove, false);
+    statChange(Stage[enemyMove].substring(0,1), Stage[enemyMove].substring(1));
+    myHPBar.display();
+    enemyHPBar.display();
+  }
+  }  
+  if(myPokemon.getHP() <= 0){
+    lossScreen = true;
+  } 
+   else if(enemyPokemon.getHP() <= 0){
+    victoryScreen = true;
+  } 
+    else if (myPokemon.getHP> 0 && enemyPokemon.getHP > 0){
+Battle();
+}
+}
+
+statChange(String stat, int stage, Pokemon userPokemon){
+if(stat.equals("ATK")){
+userPokemon.setATK(stage * .5 * userPokemon.getATK() + userPokemon.getATK());
+}
+if(stat.equals("DEF")){ 
+userPokemon.setDEF(stage * .5 * userPokemon.getDEF() + userPokemon.getDEF());
+}
+if(stat.equals("SPATK")){
+userPokemon.setSPATK(stage * .5 * userPokemon.getSPATK() + userPokemon.getSPATK());
+}
+if(stat.equals("SPDEF")){
+userPokemon.setSPDEF(stage * .5 * userPokemon.getSPDEF() + userPokemon.getSPDEF());
+}
+if(stat.equals("speed")){
+userPokemon.setSPD(stage * .5 * userPokemon.getspeed() + userPokemon.getspeed());
+}
+}
+
+
+public void damageCalc(String move, boolean TargetEnemy, Pokemon userPokemon){
+if (TargetEnemy){
+String type1 = enemyPokemon.getType1();
+String type2 = enemyPokemon.getType2();
+}
+else{
+String type1 = myPokemon.getType1();
+String type2 = myPokemon.getType2();
+}
+double STABbonus = 1;
+if ((TargetEnemy && (myPokemon.getType1.equals(Type[move])  
+|| myPokemon.getType2.equals(Type[move]))) 
+||  (!TargetEnemy && (enemyPokemon.getType1.equals(Type[move]) 
+|| enemyPokemon.getType2.equals(Type[move])))) {
+STABbonus = 1.5;
+}
+double typeAdvantage = typeChart(Type[move], type1) * typeChart(Type[move], type2);
+double abilityboost = 1;
+if(userPokemon.getAbility.equals("Blaze") && userPokemon.getType1().equals("FIR")){
+  abilityboost = 1.5;
+}
+if(userPokemon.getAbility.equals("Overgrow") && userPokemon.getType1().equals("GRA")){
+  abilityboost = 1.5;
+}
+if(userPokemon.getAbility.equals("Torrent") && userPokemon.getType1().equals("WAT")){
+  abilityboost = 1.5;
+}
+
+
+if(TargetEnemy){
+enemyPokemon.setHP(enemyPokemon.currentHP - 
+(2/5 * Damage[move] * typeAdvantage * STABbonus * 
+(myPokemon.getATK() / ((double) enemyPokemon.getDEF())) * abilityboost));
+
+
+//NEED TO REPLACE A LOT OF THIS WITH THE EQUATION ON WIKI PAGE 
+//(2*level)/5 * power /50 + 2 * stab * a ton of other modifiers just leave it as is for now because i need to dedicate a lot of time in consecutive hours for this
+}
+}
+
+public double typeChart(String moveType, String targetType){
+ if(moveType.equals("NOR") && targetType.equals("GHO")){
+   return 0;
+ }
+ if(moveType.equals("NOR") && (targetType.equals("ROC") || targetType.equals("STE"))){
+   return .5;
+ }
+ if(moveType.equals("NOR") && !(targetType.equals("GHO") || targetType.equals("ROC") || targetType.equals("STE"))){
+   return 1;
+ }
+ if(moveType.equals("FIR") && (targetType.equals("FIR") || targetType.equals("WAT") || targetType.equals("ROC") || targetType.equals("DRA"))){
+   return .5;
+ }
+ if(moveType.equals("FIR") && (targetType.equals("GRA") || targetType.equals("ICE") || targetType.equals("BUG") || targetType.equals("STE"))){
+   return 2;
+ }
+ if(moveType.equals("FIR") && !(targetType.equals("FIR") || targetType.equals("WAT") || targetType.equals("ROC") || targetType.equals("DRA") || targetType.equals("GRA") || targetType.equals("ICE") || targetType.equals("BUG") || targetType.equals("STE"))){
+   return 1;
+ }
+ if(moveType.equals("WAT") && (targetType.equals("WAT") || targetType.equals("GRA") || targetType.equals("DRA"))){
+   return .5;
+ }
+ if(moveType.equals("WAT") && (targetType.equals("FIR") || targetType.equals("GRO") || targetType.equals("ROC"))){
+   return 2;
+ }
+ if(moveType.equals("WAT") && !(targetType.equals("WAT") || targetType.equals("GRA") || targetType.equals("DRA") || targetType.equals("FIR") || targetType.equals("GRO") || targetType.equals("ROC"))){
+   return 1;
+ }
+ if(moveType.equals("GRA") && (targetType.equals("FIR") || targetType.equals("GRA") || targetType.equals("POI") || targetType.equals("FLY") || targetType.equals("BUG") || targetType.equals("DRA") || targetType.equals("STE"))){
+   return .5;
+ }
+ if(moveType.equals("GRA") && (targetType.equals("WAT") || targetType.equals("GRO") || targetType.equals("ROC"))){
+   return 2;
+ }
+ if(moveType.equals("GRA") && !(targetType.equals("FIR") || targetType.equals("GRA") || targetType.equals("POI") || targetType.equals("FLY") || targetType.equals("BUG") || targetType.equals("DRA") || targetType.equals("STE") || targetType.equals("WAT") || targetType.equals("GRO") || targetType.equals("ROC"))){
+   return 1;
+ }
+ if(moveType.equals("ELE") && targetType.equals("GRO")){
+   return 0;
+ }
+ if(moveType.equals("ELE") && (targetType.equals("ELE") || targetType.equals("GRA") || targetType.equals("DRA"))){
+   return .5;
+ }
+ if(moveType.equals("ELE") && (targetType.equals("WAT") || targetType.equals("FLY"))){
+   return 2;
+ }
+ if(moveType.equals("ELE") && !(targetType.equals("GRO") || targetType.equals("ELE") || targetType.equals("GRA") || targetType.equals("DRA") || targetType.equals("WAT") || targetType.equals("FLY"))){
+   return 1;
+ }
+ if(moveType.equals("ICE") && (targetType.equals("FIR") || targetType.equals("WAT") || targetType.equals("ICE") || targetType.equals("STE"))){
+   return .5;
+ }
+ if(moveType.equals("ICE") && (targetType.equals("GRA") || targetType.equals("GRO") || targetType.equals("FLY") || targetType.equals("DRA"))){
+   return 2;
+ }
+ if(moveType.equals("ICE") && !(targetType.equals("FIR") || targetType.equals("WAT") || targetType.equals("ICE") || targetType.equals("STE") || targetType.equals("GRA") || targetType.equals("GRO") || targetType.equals("FLY") || targetType.equals("DRA"))){
+   return 1;
+ }
+ if(moveType.equals("FIG") && (targetType.equals("POI")
+ 
+ 
+
+
   
