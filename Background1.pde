@@ -68,27 +68,27 @@ void setup(){
   BlazikenStatCard = loadImage("BlazikenStatCard.png");
   SwampertStatCard = loadImage("SwampertStatCard.png");
   
-newMap.put("SleepPowder", new String[] {"75", "0", "GRA", });
-newMap.put("LeafStorm", new String[] {"90", "130", "GRA"});
-newMap.put("Synthesis", new String[] {"100", "0", "GRA"});
-newMap.put("SludgeBomb", new String[] {"100", "80", "POI"});
-newMap.put("Overheat", new String[] {"90", "130", "FIR"});
-newMap.put("DragonDance", new String[] {"100", "0", "DRA"});
-newMap.put("FlareBlitz", new String[] {"100", "120", "FIR"});
-newMap.put("Hurricane", new String[] {"70", "110", "FLY"});
-newMap.put("HydroPump", new String[] {"80", "110", "WAT"});
-newMap.put("ShellSmash", new String[] {"100", "0", "WAT"});
-newMap.put("IceBeam", new String[] {"100", "90", "ICE"});
-newMap.put("IcyWind", new String[] {"100", "55", "ICE"});
-newMap.put("FocusBlast", new String[] {"70", "120", "FIG"});
-newMap.put("Acrobatics", new String[] {"100", "110", "FLY"});
-newMap.put("XScissor", new String[] {"100", "80", "BUG"});
-newMap.put("CloseCombat", new String[] {"100", "120", "FIG"});
-newMap.put("Protect", new String[] {"100", "0", "NOR"});
-newMap.put("SwordsDance", new String[] {"100", "0", "GRA"});
-newMap.put("Liquidation", new String[] {"100", "80", "WAT"});
-newMap.put("Earthquake", new String[] {"100", "100", "GRO"});
-newMap.put("PoisonJab", new String[] {"100", "80", "POI"});
+newMap.put("SleepPowder", new String[] {"75", "0", "GRA","SPA" });
+newMap.put("LeafStorm", new String[] {"90", "130", "GRA", "SPA"});
+newMap.put("Synthesis", new String[] {"100", "0", "GRA", "SPA"});
+newMap.put("SludgeBomb", new String[] {"100", "80", "POI", "SPA"});
+newMap.put("Overheat", new String[] {"90", "130", "FIR","SPA"});
+newMap.put("DragonDance", new String[] {"100", "0", "DRA", "SPA"});
+newMap.put("FlareBlitz", new String[] {"100", "120", "FIR", "PHY"});
+newMap.put("Hurricane", new String[] {"70", "110", "FLY", "SPA"});
+newMap.put("HydroPump", new String[] {"80", "110", "WAT", "SPA"});
+newMap.put("ShellSmash", new String[] {"100", "0", "WAT", "SPA"});
+newMap.put("IceBeam", new String[] {"100", "90", "ICE", "SPA"});
+newMap.put("IcyWind", new String[] {"100", "55", "ICE", "SPA"});
+newMap.put("FocusBlast", new String[] {"70", "120", "FIG", "SPA"});
+newMap.put("Acrobatics", new String[] {"100", "110", "FLY", "PHY"});
+newMap.put("XScissor", new String[] {"100", "80", "BUG", "PHY"});
+newMap.put("CloseCombat", new String[] {"100", "120", "FIG", "PHY"});
+newMap.put("Protect", new String[] {"100", "0", "NOR", "SPA"});
+newMap.put("SwordsDance", new String[] {"100", "0", "GRA", "PHY"});
+newMap.put("Liquidation", new String[] {"100", "80", "WAT", "PHY"});
+newMap.put("Earthquake", new String[] {"100", "100", "GRO", "PHY"});
+newMap.put("PoisonJab", new String[] {"100", "80", "POI", "PHY"});
 
 }
 //call background(bgColor) to erase the screen when changing what I want to show
@@ -106,6 +106,37 @@ void draw(){
     LossScreenLoad();
   }
  
+ 
+ 
+}
+void mouseClicked(){
+  if(BattleScreen){
+  if(mouseX <200 && mouseY >=400 && mouseY <500){
+      myMove = myPokemon.getMoveArray()[0];
+     rect(0, 0, 20, 20);
+Battle();
+     
+   }
+    if(mouseX >=200 && mouseY >= 400 && mouseY < 500){
+     myMove = myPokemon.getMoveArray()[1];
+       rect(0, 0, 20, 20);
+ Battle();
+
+   }
+    if(mouseX <200 && mouseY > 500){
+       rect(0, 0, 20, 20);
+     myMove = myPokemon.getMoveArray()[2];
+Battle();
+
+   }
+    if(mouseX >=200 && mouseY > 500){
+       rect(0, 0, 20, 20);
+     myMove = myPokemon.getMoveArray()[3];
+ Battle();
+     
+   }
+   
+}
 }
 //hold here and just delete battle function because it does not work at all with new changes
 //remake whole battlescreen arrangement because back sprites look weird
@@ -117,8 +148,6 @@ void BattleScreenLoad(){
  enemyHPbar.display();
   fill(20);
   textSize(24);
-  
-   EnemyChoice = "SW";
    if(UserChoice.equals("V")){
      VenusaurBack.resize(150, 150);
      image(VenusaurBack, 0, 265);
@@ -238,31 +267,7 @@ void BattleScreenLoad(){
    if(EnemyChoice.equals("SW")){
      image(Swampert, 260, 100);
    }
-   if(mouseX <200 && mouseY >=400 && mouseY <500 && mousePressed){
-     myMove = myPokemon.getMoveArray()[0];
-     rect(0, 0, 20, 20);
- Battle();
-     
-   }
-   else if(mouseX >=200 && mouseY >= 400 && mouseY < 500 && mousePressed){
-     myMove = myPokemon.getMoveArray()[1];
-       rect(0, 0, 20, 20);
- Battle();
-
-   }
-   else if(mouseX <200 && mouseY > 500 && mousePressed){
-       rect(0, 0, 20, 20);
-     myMove = myPokemon.getMoveArray()[2];
-Battle();
-
-   }
-   else if(mouseX >=200 && mouseY > 500 && mousePressed){
-       rect(0, 0, 20, 20);
-     myMove = myPokemon.getMoveArray()[3];
- Battle();
-     
-   }
-   
+  
   //LOAD IN NEW BACKGROUND here
 }
 
@@ -280,8 +285,16 @@ void testBattle(){
 
 
 void VictoryScreenLoad(){
+  delay(2000);
+  background(255);
+  fill(0);
+  text("YOU WIN! with - " + myHPbar.getNamed(), 150, 200);
 }
 void LossScreenLoad(){
+  delay(2000);
+  background(0);
+  fill(255);
+  text("YOU LOSE! ", 150, 200);
 }
 
 void SelectScreenLoad(){
@@ -315,6 +328,7 @@ void openSelection(){
      BattleScreen = true;
      myPokemon = new Pokemon(UserChoice);
    enemyPokemon = new Pokemon(EnemyChoice);
+ 
    myHPbar = new HPbar(myPokemon.getMaxHP(), myPokemon.getMaxHP(), true, "Venusaur");
    enemyHPbar = new HPbar(enemyPokemon.getMaxHP(), enemyPokemon.getMaxHP(), false, "Enemy Pokemon");
   
@@ -332,6 +346,7 @@ void openSelection(){
      BattleScreen = true;
       myPokemon = new Pokemon(UserChoice);
    enemyPokemon = new Pokemon(EnemyChoice);
+  
    myHPbar = new HPbar(myPokemon.getMaxHP(), myPokemon.getMaxHP(), true, "Charizard");
    enemyHPbar = new HPbar(enemyPokemon.getMaxHP(), enemyPokemon.getMaxHP(), false, "Enemy Pokemon");
    }
@@ -412,7 +427,13 @@ if (myPokemon.getSpeed() > enemyPokemon.getSpeed()){
   if (Integer.parseInt(newMap.get(myMove)[0]) > Math.random()*100){
    
     damageCalc(myMove, true, myPokemon);
-      
+       if(myMove.equals("SleepPowder")){
+         statChange("ATK", -100, enemyPokemon);
+         statChange("SPATK", -100, enemyPokemon);
+    }
+    if(myMove.equals("Protect")){
+      myPokemon.setHP(50);
+    }
     if(myMove.equals("LeafStorm")){
       statChange("SPATK", -2, myPokemon);
     }
@@ -449,8 +470,20 @@ if (myPokemon.getSpeed() > enemyPokemon.getSpeed()){
         if(myMove.equals("SwordsDance")){
           statChange("ATK", 2, myPokemon);
         }
+        delay(100);
+        enemyHPbar.display();
+        if(enemyHPbar.getPercentage() == 0){
+          VictoryScreen = true;
+        }
+        //ENEMY LINES
     damageCalc(enemyMove, false, enemyPokemon);
-         
+       if(enemyMove.equals("SleepPowder")){
+         statChange("ATK", -100, myPokemon);
+         statChange("SPATK", -100, myPokemon);
+    }
+    if(enemyMove.equals("Protect")){
+      enemyPokemon.setHP(50);
+    }
     if(enemyMove.equals("LeafStorm")){
       statChange("SPATK", -2, enemyPokemon);
     }
@@ -493,7 +526,13 @@ if (myPokemon.getSpeed() > enemyPokemon.getSpeed()){
     if(Integer.parseInt(newMap.get(enemyMove)[0]) > Math.random()*100){
    
     damageCalc(enemyMove, false, enemyPokemon);
-    
+     if(enemyMove.equals("SleepPowder")){
+         statChange("ATK", -100, myPokemon);
+         statChange("SPATK", -100, myPokemon);
+    }
+    if(enemyMove.equals("Protect")){
+      enemyPokemon.setHP(50);
+    }
     if(enemyMove.equals("LeafStorm")){
       statChange("SPATK", -2, enemyPokemon);
     }
@@ -530,8 +569,17 @@ if (myPokemon.getSpeed() > enemyPokemon.getSpeed()){
         if(enemyMove.equals("SwordsDance")){
           statChange("ATK", 2, enemyPokemon);
         }
+    if(myHPbar.percentage == 0){
+      LossScreen = true;
+    }
       damageCalc(myMove, true, myPokemon);
-       
+    if(myMove.equals("SleepPowder")){
+         statChange("ATK", -100, enemyPokemon);
+         statChange("SPATK", -100, enemyPokemon);
+    }
+    if(myMove.equals("Protect")){
+      myPokemon.setHP(50);
+    }
     if(myMove.equals("LeafStorm")){
       statChange("SPATK", -2, myPokemon);
     }
@@ -570,51 +618,83 @@ if (myPokemon.getSpeed() > enemyPokemon.getSpeed()){
         }
   }
   }  
+
   myHPbar.display();
   enemyHPbar.display();
   
-  if(myHPbar.getPercentage() <= 0){
-    LossScreen = true;
+  if(myHPbar.getPercentage() <= 0 ||enemyHPbar.getPercentage() <= 0 ){
+
     BattleScreen =false;
   } 
-   else if(enemyHPbar.getPercentage() <= 0){
+  
+   if(enemyHPbar.getPercentage() <= 0 && LossScreen != true){
     VictoryScreen = true;
     BattleScreen = false;
   } 
+  if(myHPbar.getPercentage() <= 0 && VictoryScreen != true){
+    LossScreen = true;
+    BattleScreen = false;
+  } 
    
-    enemyHPbar.update(enemyPokemon.getHP() - 5);
+
   
 }
 
 void statChange(String stat, int stage, Pokemon userPokemon){
 if(stat.equals("ATK")){
-userPokemon.setATK((int)(stage * .5 * userPokemon.getATK() + userPokemon.getATK()));
+if(stage > 0){
+    userPokemon.setATK((int)(stage * .5 * userPokemon.getATK() + userPokemon.getATK()));
+  }
+  else{
+    userPokemon.setATK((int)(1.0/stage * userPokemon.getATK()));
+  }
 }
 if(stat.equals("DEF")){ 
-userPokemon.setDEF((int)(stage * .5 * userPokemon.getDEF() + userPokemon.getDEF()));
+if(stage > 0){
+    userPokemon.setDEF((int)(stage * .5 * userPokemon.getDEF() + userPokemon.getDEF()));
+  }
+  else{
+    userPokemon.setDEF((int)(1.0/stage * userPokemon.getDEF()));
+  }
 }
 if(stat.equals("SPATK")){
-userPokemon.setSPATK((int)(stage * .5 * userPokemon.getSPATK() + userPokemon.getSPATK()));
+  if(stage > 0){
+    userPokemon.setSPATK((int)(stage * .5 * userPokemon.getSPATK() + userPokemon.getSPATK()));
+  }
+  else{
+    userPokemon.setSPATK((int)(1.0/stage * userPokemon.getSPATK()));
+  }
 }
 if(stat.equals("SPDEF")){
-userPokemon.setSPDEF((int)(stage * .5 * userPokemon.getSPDEF() + userPokemon.getSPDEF()));
+if(stage > 0){
+    userPokemon.setSPDEF((int)(stage * .5 * userPokemon.getSPDEF() + userPokemon.getSPDEF()));
+  }
+  else{
+    userPokemon.setSPDEF((int)(1.0/stage * userPokemon.getSPDEF()));
+  }
 }
 if(stat.equals("speed")){
-  int a = (int)(stage * .5 * userPokemon.getSpeed() + userPokemon.getSpeed());
-userPokemon.setSpeed(a);
+  if(stage > 0){
+    userPokemon.setSpeed((int)(stage * .5 * userPokemon.getSpeed() + userPokemon.getSpeed()));
+  }
+  else{
+    userPokemon.setSpeed((int)(1.0/stage * userPokemon.getSpeed()));
+  }
 }
 }
 
 
 public void damageCalc(String move, boolean TargetEnemy, Pokemon userPokemon){
 
-  String type1 = myPokemon.getType1();
-String type2 = myPokemon.getType2();
-if (TargetEnemy){
-type1 = enemyPokemon.getType1();
-type2 = enemyPokemon.getType2();
-}
-
+String type1 = enemyPokemon.getType1();
+String type2 = enemyPokemon.getType2();
+  
+  if(userPokemon == myPokemon){
+  type1 = enemyPokemon.getType1();
+  type2 = enemyPokemon.getType2();
+  }
+  
+  
 double STABbonus = 1;
 if ((TargetEnemy && (myPokemon.getType1().equals(newMap.get(move)[2]) 
 || myPokemon.getType2().equals(newMap.get(move)[2]))) 
@@ -636,22 +716,62 @@ if(userPokemon.getAbility().equals("Torrent") && userPokemon.getType1().equals("
 
 
 if(TargetEnemy){
+ 
+  double point4 =((double)2)/5;
+  double movedamage = Integer.parseInt(newMap.get(move)[1]);
+  double atk = myPokemon.getATK();
+  double def = enemyPokemon.getDEF();
+  double spatk = myPokemon.getSPATK();
+  double spdef = enemyPokemon.getSPDEF();
+  double special= spatk/spdef;
+  double atkdef = (atk/def);
+  
+  if(movedamage == 0.0){
+  }
+  else{
   int d = (int)(enemyPokemon.getHP() - 
-( Integer.parseInt(newMap.get(move)[1]) * typeAdvantage * STABbonus * 
-(myPokemon.getATK() / ((double) enemyPokemon.getDEF())) * abilityboost));
-int w = (int)(enemyPokemon.getHP() - Integer.parseInt(newMap.get(move)[1]));
+ // --> .4 * 130 * 2 * 1.5 * 1 * 
+(point4 * movedamage * typeAdvantage * STABbonus * atkdef * abilityboost));
+if(newMap.get(move)[3].equals("SPA")){
+  d = (int)(enemyPokemon.getHP() - point4 * movedamage * typeAdvantage * STABbonus * special * abilityboost);
+}
+
+int w = (int)(enemyPokemon.getHP() - 10);
+
+System.out.println("Your pokemon used " + move + "!");
+System.out.println("The enemy pokemon has " + d + " health remaining!");
 enemyPokemon.setHP(d);
 enemyHPbar.update(d);
 
-
+  }
 }
 else{
-  int q = (int)(myPokemon.getHP() - 
-  ( Integer.parseInt(newMap.get(move)[1]) * typeAdvantage *
-  STABbonus * (myPokemon.getATK() / ((double) enemyPokemon.getDEF())) * abilityboost));
-  int e = (int)(myPokemon.getHP() - Integer.parseInt(newMap.get(move)[1]));
-  myPokemon.setHP(q);
-  myHPbar.update(q);
+   double point4 =((double)2)/5;
+  double movedamage = Integer.parseInt(newMap.get(move)[1]);
+  double atk = enemyPokemon.getATK();
+  double def = myPokemon.getDEF();
+  double spatk = enemyPokemon.getSPATK();
+  double spdef = myPokemon.getSPDEF();
+  double special= spatk/spdef;
+  double atkdef = (atk/def);
+  
+  if(movedamage == 0.0){
+  }
+  else{
+  int d = (int)(myPokemon.getHP() - 
+ // --> .4 * 130 * 2 * 1.5 * 1 * 
+(point4 * movedamage * typeAdvantage * STABbonus * atkdef * abilityboost));
+if(newMap.get(move)[3].equals("SPA")){
+  d = (int)(myPokemon.getHP() - point4 * movedamage * typeAdvantage * STABbonus * special * abilityboost);
+}
+
+int w = (int)(myPokemon.getHP() - 10);
+System.out.println("Enemy pokemon used " + move + "!");
+System.out.println("Your pokemon has " + d + " health remaining!");
+myPokemon.setHP(d);
+myHPbar.update(d);
+
+  }
 }
 }
 
