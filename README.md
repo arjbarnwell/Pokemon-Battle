@@ -1,6 +1,4 @@
-# Pokemon-Battle
-APCSA final project remember deadlines: 5.23, 5.28, 6.3, 6.12 (10PM w/ VIDEO)
+Arden Barnwell Period 7 - Pokemon Battle Simulation Project:
 
-Check the 6.12 google form and make sure that it is on time
+In terms of user interaction, players will select a pokemon with LMB and then will be brought to the battle screen. Here, players will be able to click on a move with LMB, after which the system will select a move and carry out the current turn. This will repeat until a Pokemon is defeated, after which the ending screen will play. 
 
-Arden Barnwell Period 7 
