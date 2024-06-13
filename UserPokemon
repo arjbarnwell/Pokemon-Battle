@@ -24,19 +24,19 @@ class Pokemon{
   void setHP(int newHP){
     currentHP = newHP;
   }
-  void getATK(){
+  int getATK(){
     return ATK;
   }
-  void getSPATK(){
+  int getSPATK(){
     return SPATK;
   }
-  void getDEF(){
+  int getDEF(){
     return DEF;
   }
-  void getSPDEF(){
+  int getSPDEF(){
     return SPDEF;
   }
-  void getSpeed(){
+  int getSpeed(){
     return speed;
   }
   void setATK(int newA){
@@ -55,13 +55,16 @@ class Pokemon{
     speed = n;
   }
   String getAbility(){
-    return Ability;
+    return ability;
   }
   String getType1(){
     return type1;
   }
   String getType2(){
     return type2;
+  }
+  String[] getMoveArray(){
+    return moveArray;
   }
   
  public Pokemon(String choice){
@@ -96,6 +99,8 @@ class Pokemon{
       this.move2 = "DragonDance";
       this.move3 = "FlareBlitz";
       this.move4 = "Hurricane";
+      this.ability = "Blaze";
+      this.moveArray = new String[] {"Overheat", "DragonDance", "FlareBlitz", "Hurricane"};
       
     }
     else if(choice.equals("BL")){
@@ -112,6 +117,8 @@ class Pokemon{
       this.move2 = "ShellSmash";
       this.move3 = "IceBeam";
       this.move4 = "IcyWind";
+      this.ability = "Torrent";
+      this.moveArray = new String[] {"HydroPump", "ShellSmash", "IceBeam", "IcyWind"};
     }
     else if(choice.equals("SC")){
       this.rawHP = 70;
@@ -121,6 +128,14 @@ class Pokemon{
       this.SPATK = 105;
       this.SPDEF = 85;
       this.speed = 120;
+      this.type1 = "GRA";
+      this.type2 = "";
+      this.move1 = "LeafStorm";
+      this.move2 = "FocusBlast";
+      this.move3 = "Acrobatics";
+      this.move4 = "XScissor";
+      this.ability = "Overgrow";
+      this.moveArray = new String[] {"LeafStorm", "FocusBlast", "Acrobatics", "XScissor"};
     }
     else if(choice.equals("BZ")){
       this.rawHP = 80;
@@ -130,6 +145,14 @@ class Pokemon{
       this.SPATK = 110;
       this.SPDEF = 70;
       this.speed = 80;
+      this.type1 = "FIR";
+      this.type2 ="FIG";
+      this.move1 = "FlareBlitz";
+      this.move2 = "CloseCombat";
+      this.move3 = "SwordsDance";
+      this.move4 = "Protect";
+      this.ability = "Blaze";
+      this.moveArray = new String[] {"FlareBlitz", "CloseCombat", "SwordsDance", "Protect"};
       
     }
     else if(choice.equals("SW")){
@@ -140,6 +163,14 @@ class Pokemon{
       this.SPATK = 85;
       this.SPDEF = 90;
       this.speed = 60;
+      this.type1 = "WAT";
+      this.type2 = "GRO";
+      this.move1 = "Liquidation";
+      this.move2 = "Earthquake";
+      this.move3 = "PoisonJab";
+      this.move4 = "Protect";
+      this.ability = "Torrent";
+      this.moveArray = new String[] {"Liquidation", "Earthquake", "PoisonJab", "Protect"};
     }
  }
 }
